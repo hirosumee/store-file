@@ -16,7 +16,7 @@
               <input type="file" name="choose" id="sp-name"><br>
               <button type="submit"  id="sp-name" >Submit</button>
             </form>
-            <div><span id="status"> Bạn còn <%= remain%> </span></div>
+            <div><span id="status"> <%= remain%> </span></div>
           </div>
         <ul class="list-file">
             <% for(i=0;i<data.length;i++)
@@ -28,8 +28,23 @@
                            <a href="/download/<%=data[i].name%>"><%=data[i].name%></a>
                            <br>
                            <small>
-                             <span>1 giờ trước</span>
-                             <span class="luot-tai"><%= data[i].size/1024%></span>
+                             <span class="info">
+                                 <%
+                                   if(data[i].date/60>=1)
+                                   {
+                                          %>
+                                               <%='Khoảng '+ Math.round(data[i].date/60)+' giờ trước'%>
+                                          <%
+                                   }
+                                   else
+                                    {
+                                          %>
+                                            <%='Khoảng '+Math.round(data[i].date%60)+' phút trước'%>
+                                          <%
+                                    }
+                                 %>
+                             </span>
+                             <span class="luot-tai info"><%= data[i].size/1024%></span>
                            </small>
                          </h3>
                        </div>
