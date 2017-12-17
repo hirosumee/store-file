@@ -1,0 +1,40 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #e4e4e4;
+}
+
+a {
+  color: #00B7FF;
+}
+.upload-file{
+  margin-bottom: 50px;
+}
+.list-file{
+  background-color: #cee4e4;
+  width: 80%;
+  margin-left: 10%;
+}
+#sp-name{
+  padding-bottom: 0px;
+  margin-bottom: 10px;
+}
+.upload-file{
+  width: 20%;
+  margin-left: 40%;
+}
+.file-info{
+
+    box-sizing: border-box;
+}
+.file-countdown{
+    float: left;
+    margin-top: 25px;
+    box-sizing: border-box;
+}
+.li-file{
+    height: 60px;
+}
+.luot-tai{
+    margin-left: 100px;
+}

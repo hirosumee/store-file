@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="container">
+      <div class="navi-bar">
+
+      </div>
+      <div class="main">
+          <div class="upload-file">
+            <form action="upload" method="POST" enctype="multipart/form-data">
+              <div><span id="sp-name">Chọn File :</span></div>
+              <input type="file" name="choose" id="sp-name"><br>
+              <button type="submit"  id="sp-name" >Submit</button>
+            </form>
+            <div><span id="status"> Bạn còn <%= remain%> </span></div>
+          </div>
+        <ul class="list-file">
+            <% for(i=0;i<data.length;i++)
+              {
+                  %>
+                     <li class="li-file">
+                       <div class="file-info">
+                         <h3>
+                           <a href="/download/<%=data[i].name%>"><%=data[i].name%></a>
+                           <br>
+                           <small>
+                             <span>1 giờ trước</span>
+                             <span class="luot-tai"><%= data[i].size/1024%></span>
+                           </small>
+                         </h3>
+                       </div>
+                       <hr>
+                     </li>
+                  <%
+              } %>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
