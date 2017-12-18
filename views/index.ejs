@@ -30,6 +30,7 @@
                            <small>
                              <span class="info">
                                  <%
+                                     data[i].date=(new Date()-new Date(data[i].server_modified))/60000;
                                    if(data[i].date/60>=1)
                                    {
                                           %>
@@ -44,7 +45,7 @@
                                     }
                                  %>
                              </span>
-                             <span class="luot-tai info"><%= data[i].size/1024%></span>
+                             <span class="luot-tai info"><%= Math.round(data[i].size/1024)+'KB'%></span>
                            </small>
                          </h3>
                        </div>

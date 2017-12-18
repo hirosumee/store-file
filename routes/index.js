@@ -2,25 +2,34 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 var formidable=require('formidable');
-var filter_File=require('../ulti/filter_file');
+var dropbox=require('../ulti/Dropbox');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  var a=filter_File('store-file');
-  a.then(function (data) {
-      res.render('index', { title: 'Express' ,remain:'Server chỉ có 500mb lưu trữ',data:data });
-  })
+    //
+    dropbox.getFileName().then(function (data) {
+        res.render('index', { title: 'Express' ,remain:'Server chỉ có 500mb lưu trữ',data:data.entries });
+    })
 });
 router.get('/download/:id',function (req,res) {
-  res.download('store-file/'+req.params.id,function (e) {
-      if(e)
-      {
-        console.error('lỗi tải xuống');
-      }
-      else
-      {
-        console.log('tải xuống thành công',req.params.id);
-      }
-  })
+    dropbox.download(req.params.id)
+        .then(function (data) {
+            res.download(data,function (e) {
+                if(e)
+                {
+                    console.error('lỗi tải xuống');
+                }
+                else
+                {
+                    console.log('tải xuống thành công',req.params.id);
+                    fs.unlink(data,function (err) {
+                        console.log('xóa bộ đệm tải xuống thành công');
+                    })
+                }
+            })
+        })
+        .catch(function (err) {
+            console.error(err)
+        })
 });
 router.post('/upload',function (req,res) {
     var form =  new formidable.IncomingForm();
@@ -35,7 +44,17 @@ router.post('/upload',function (req,res) {
             var newpath = form.uploadDir + file.choose.name;
             fs.rename(path, newpath, function (err) {
                 if (err) console.error(err);
-                res.redirect('/')
+                dropbox.upload('.\\store-file',file.choose.name)
+                    .then(function (data) {
+                        fs.unlink(path,function (err) {
+                            console.log('xóa bộ đệm tải lên thành công');
+                        })
+                        console.log(data);
+                        res.redirect('/')
+                    })
+                    .catch(function (err) {
+                        console.error(err)
+                    })
             });
         }
         else
