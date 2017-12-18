@@ -11,7 +11,7 @@ module.exports=function (path) {
                  for( i=0;i<items.length;i++)
                 {
                     var f=fs.statSync(path+'/'+items[i]);
-                    data.push({name:items[i],size:f.size ,date:((new Date())-(new Date(f.birthtime)))/(60*1000)});
+                    data.push({name:items[i],size:Math.round(f.size) ,date:((new Date())-(new Date(f.birthtime)))/(60*1000)});
                 }
                 resolve(data);
             }
