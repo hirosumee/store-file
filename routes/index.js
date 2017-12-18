@@ -34,7 +34,7 @@ router.get('/download/:id',function (req,res) {
 router.post('/upload',function (req,res) {
     var form =  new formidable.IncomingForm();
     //Thiết lập thư mục chứa file trên server
-    form.uploadDir = "store-file/";
+    form.uploadDir = "./";
     //xử lý upload
     form.parse(req,function (err, fields, file) {
         //path tmp trên server
@@ -46,7 +46,7 @@ router.post('/upload',function (req,res) {
                 if (err) console.error(err);
                 dropbox.upload('.\\store-file',file.choose.name)
                     .then(function (data) {
-                        fs.unlink(path,function (err) {
+                        fs.unlink('./'+file.choose.name,function (err) {
                             console.log('xóa bộ đệm tải lên thành công');
                         })
                         console.log(data);

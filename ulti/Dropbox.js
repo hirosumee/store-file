@@ -30,7 +30,7 @@ var upload=module.exports.upload=function (path,name) {
                     }
                 }
                 //
-                fs.readFile(path+'\\'+ name,function (err,data) {
+                fs.readFile(name,function (err,data) {
                     if(err)
                     {
                         console.log(err);
@@ -64,10 +64,10 @@ var download =module.exports.download=function (name) {
                         {
                             dbx.filesDownload({path:'/'+name}).then(
                                 function (data) {
-                                    fs.writeFile('./store-file/'+data.name, data.fileBinary, 'binary', function (err) {
+                                    fs.writeFile(data.name, data.fileBinary, 'binary', function (err) {
                                         if (err) { throw err; }
                                         console.log('File: ' + data.name + ' saved.');
-                                        resolve('./store-file/'+data.name);
+                                        resolve(data.name);
                                     });
                                 }
                             )
