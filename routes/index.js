@@ -28,7 +28,8 @@ router.get('/download/:id',function (req,res) {
             })
         })
         .catch(function (err) {
-            console.error(err)
+            console.error(err);
+            res.redirect('/');
         })
 });
 router.post('/upload',function (req,res) {
@@ -36,10 +37,11 @@ router.post('/upload',function (req,res) {
     //Thiết lập thư mục chứa file trên server
     form.uploadDir = "./";
     //xử lý upload
+    console.log(req);
     form.parse(req,function (err, fields, file) {
         //path tmp trên server
         var path = file.choose.path;
-        if(file.choose.name!='') {
+        if(file.choose.name!=''&&file.choose.size<200000000) {
             //thiết lập path mới cho file
             var newpath = form.uploadDir + file.choose.name;
             fs.rename(path, newpath, function (err) {
@@ -54,6 +56,7 @@ router.post('/upload',function (req,res) {
                     })
                     .catch(function (err) {
                         console.error(err)
+                        res.redirect('/');
                     })
             });
         }
@@ -62,7 +65,7 @@ router.post('/upload',function (req,res) {
           fs.unlink(path,function (err) {
               console.log('delete file size null');
           });
-          res.send('vui lòng chọn file hoặc file có tên không hợp lệ!!');
+            res.redirect('/');
         }
     });
     return ;
