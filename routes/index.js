@@ -23,18 +23,17 @@ router.get('/login', function(req, res, next) {
 router.post('/upload',function (req,res) {
     var form=new formidable.IncomingForm();
     form.multiples=false;
-    form.uploadDir= path.join(__dirname, '/uploads');
+    form.uploadDir= './';
     form.parse(req,function (err, fields, file) {
         //path tmp trên server
         var pathf = file.files.path;
         if(file.files.name!=''&&file.files.size<20000000) {
             //thiết lập path mới cho file
-            var newpath = form.uploadDir +'\\'+ file.files.name;
-            console.log(newpath);
+            var newpath = form.uploadDir +file.files.name;
             fs.rename(pathf, newpath, function (err) {
                 if (err) console.error(err);
                 //
-                dropbox.upload(form.uploadDir,file.files.name)
+                dropbox.upload('\\',file.files.name)
                     .then(function (data) {
                         fs.unlink('./'+file.files.name,function (err) {
                             console.log('xóa bộ đệm tải lên thành công');

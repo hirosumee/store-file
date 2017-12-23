@@ -30,7 +30,7 @@ var upload=module.exports.upload=function (path,name) {
                     }
                 }
                 //
-                fs.readFile(path+'\\'+name,function (err,data) {
+                fs.readFile(name,function (err,data) {
                     if(err)
                     {
                         console.log(err);
