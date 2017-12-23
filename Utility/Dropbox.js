@@ -41,7 +41,7 @@ var upload=module.exports.upload=function (path,name) {
                         dbx.filesUpload({path:'/'+name,contents:data})
                             .then(function (res) {
 
-                                resolve('upload thành công :',name);
+                                resolve('upload thành công :'+name);
                             })
                     }
                 })

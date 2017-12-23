@@ -37,7 +37,7 @@ router.post('/upload',function (req,res) {
                 //
                 dropbox.upload('\\',file.files.name)
                     .then(function (data) {
-                        fs.unlink('./'+file.files.name,function (err) {
+                        fs.unlink(file.files.name,function (err) {
                             console.log('xóa bộ đệm tải lên thành công');
                         });
                         var ip = req.headers['x-forwarded-for'] ||
