@@ -9,13 +9,14 @@ var session=require('express-session');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var userConfig=require('./config/user-config');
 //
 var mongoose=require('mongoose');
 mongoose.connect("mongodb://hirosume:cuong299@ds042688.mlab.com:42688/gin-file",{ useMongoClient:true},function(err,db){
     if(err){
         console.log('Can not connect to mongodb',err);
     }else {
-        console.log('connected to mongodb');
+        console.log('connected to mongodb',db);
     }
 });
 var app = express();
@@ -30,6 +31,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 //use middleware autheticate
 app.use(session({
@@ -40,7 +42,14 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(function (req,res,next) {
+    res.uploadRange=userConfig.user.max_size;
+    if(!req.user&&req.user.position==='admin')
+    {
+        res.uploadRange=userConfig.admin.max_size;
+    }
+    next();
+});
 app.use('/', index);
 app.use('/', users);
 
@@ -50,7 +59,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development

@@ -2,12 +2,13 @@ var express = require('express');
 var dropbox=require('../Utility/Dropbox');
 var formidable=require('formidable');
 var router = express.Router();
-var path = require('path');
 var fs = require('fs');
+var userConfig=require('../config/user-config');
+var files=require('../models/file');
 /* GET home page. */
 router.get('/', function(req, res, next) {
     dropbox.getFileName().then(function (data) {
-        res.render('index',{data:data.entries});
+        res.render('index',{data:data.entries,status:userConfig.user.alert_filesize});
     })
 });
 router.get('/login', function(req, res, next) {
@@ -27,7 +28,8 @@ router.post('/upload',function (req,res) {
     form.parse(req,function (err, fields, file) {
         //path tmp trên server
         var pathf = file.files.path;
-        if(file.files.name!=''&&file.files.size<20000000) {
+
+        if(file.files.name!=''&&file.files.size<=res.uploadRange) {
             //thiết lập path mới cho file
             var newpath = form.uploadDir +file.files.name;
             fs.rename(pathf, newpath, function (err) {
@@ -37,12 +39,27 @@ router.post('/upload',function (req,res) {
                     .then(function (data) {
                         fs.unlink('./'+file.files.name,function (err) {
                             console.log('xóa bộ đệm tải lên thành công');
-                        })
+                        });
+                        var ip = req.headers['x-forwarded-for'] ||
+                            req.connection.remoteAddress ||
+                            req.socket.remoteAddress ||
+                            req.connection.socket.remoteAddress;
+
+                        var filec={
+                            name:file.files.name,
+                            ip:ip,
+                            user:'notLogined'
+                        };
+                        if(req.user)
+                        {
+                            filec.user=req.user.username;
+                        }
+                        files.Created(filec);
                         console.log(data);
-                        res.redirect('/')
+                        res.redirect('/');
                     })
                     .catch(function (err) {
-                        console.error(err)
+                        console.error(err);
                         res.redirect('/');
                     })
             });
@@ -55,7 +72,6 @@ router.post('/upload',function (req,res) {
             res.redirect('/');
         }
     });
-    return ;
 });
 router.get('/download/:id',function (req,res) {
     dropbox.download(req.params.id)

@@ -1,5 +1,5 @@
 var dropbox=require('dropbox');
-var fs=require('fs')
+var fs=require('fs');
 dropbox.access_token='yVTsOyK9OvAAAAAAAAAAL7tjqxUEWOGqH-Og8rcuge-J9tSAx9HKEPDlVwFZhA_e';
 var dbx=new dropbox({accessToken:dropbox.access_token});
 
@@ -21,9 +21,9 @@ var upload=module.exports.upload=function (path,name) {
             .then(function (res) {
                 for( i=0;i<res.entries.length;i++)
                 {
-                    if(res.entries[i]['.tag']=='file')
+                    if(res.entries[i]['.tag']==='file')
                     {
-                        if(res.entries[i].name==name)
+                        if(res.entries[i].name===name)
                         {
                             reject('file đã tồn tại')
                         }
@@ -40,14 +40,15 @@ var upload=module.exports.upload=function (path,name) {
                     {
                         dbx.filesUpload({path:'/'+name,contents:data})
                             .then(function (res) {
-                                resolve('upload thành công :'+name);
+
+                                resolve('upload thành công :',name);
                             })
                     }
                 })
                 //
             })
             .catch (function (err) {
-                reject('err');
+                reject(err);
             })
     });
 };
@@ -58,9 +59,9 @@ var download =module.exports.download=function (name) {
             .then( function (res) {
                 for( i=0;i<res.entries.length;i++)
                 {
-                    if(res.entries[i]['.tag']=='file')
+                    if(res.entries[i]['.tag']==='file')
                     {
-                        if(res.entries[i].name==name)
+                        if(res.entries[i].name===name)
                         {
                             dbx.filesDownload({path:'/'+name}).then(
                                 function (data) {
