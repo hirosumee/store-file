@@ -8,12 +8,14 @@ var serverConfig=require('../config/server-config')
 
 var files=require('../models/file');
 var timeIndex=new Date();
+var isfirst=true;
 var listOfFile=[];
 /* GET home page. */
 router.get('/', function(req, res, next) {
     var t=(new Date())-timeIndex;
-    if(t>=serverConfig.timeGetList)
+    if(t>=serverConfig.timeGetList||isfirst)
     {
+        isfirst=false;
         dropbox.getFileName().then(function (data) {
             timeIndex=new Date();
             listOfFile=data.entries;
@@ -105,7 +107,7 @@ router.get('/file/:id',function (req,res) {
             {
                 if(req.params.id==data[0].entries[i].name)
                 {
-                    res.render('file',{name:req.params.id,size:Math.round(data[0].entries[i].size/(1024*1024)),uploaded:data[1][0].date,username:'',status:userConfig.user.alert_filesize})
+                    res.render('file',{name:req.params.id,size:Math.round(data[0].entries[i].size/(1024)),uploaded:data[1][0].date,username:'',status:userConfig.user.alert_filesize})
                 }
             }
         })
