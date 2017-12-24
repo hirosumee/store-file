@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1, shrink-to-fit=no" />
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link href="stylesheets/style.css" rel="stylesheet" />
 </head>
 <body>
@@ -15,12 +16,17 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="/login">Login</a>
             <a class="nav-item nav-link" href="#">Registry</a>
             <a class="nav-item nav-link" href="#">Profile</a>
             <a class="nav-item nav-link disabled invisible" href="#">Logout</a>
         </div>
+        <a class="nav-item nav-link name-user ">
+            <span class="btn btn-outline-primary btn-default btn-file">
+                <%=username%>
+            </span>
+        </a>
     </div>
 </nav>
 <div class="container">
@@ -55,10 +61,10 @@
                 <tr>
                 <th scope="row"><%=data.length-i%></th>
                     <td>
-                        <a href="download/<%=data[i].name%>"><%=data[i].name%></a>
+                        <a href="file/<%=data[i].name%>"><%=data[i].name%></a>
                     </td>
                     <td><%=data[i].uploader='N/a'%></td>
-                    <td><%=((new Date(data[i].client_modified)).toUTCString())%></td>
+                    <td><%=((new Date(data[i].client_modified)).toUTCString())%>+0</td>
                     <td><%=Math.round(data[i].size/1024)%></td>
                 </tr>
             <%
@@ -68,7 +74,6 @@
     </table>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 </body>
 </html>

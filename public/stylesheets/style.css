@@ -24,3 +24,12 @@
 .role-file{
     margin-top: 10px;
 }
+.name-user{
+    position: relative;
+}
+.navbar-nav{
+    width: 90%;
+}
+.card{
+    /*margin-top: 50px;*/
+}

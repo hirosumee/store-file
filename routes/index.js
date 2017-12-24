@@ -4,12 +4,37 @@ var formidable=require('formidable');
 var router = express.Router();
 var fs = require('fs');
 var userConfig=require('../config/user-config');
+var serverConfig=require('../config/server-config')
+
 var files=require('../models/file');
+var timeIndex=new Date();
+var listOfFile=[];
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    dropbox.getFileName().then(function (data) {
-        res.render('index',{data:data.entries,status:userConfig.user.alert_filesize});
-    })
+    var t=(new Date())-timeIndex;
+    if(t>=serverConfig.timeGetList)
+    {
+        dropbox.getFileName().then(function (data) {
+            timeIndex=new Date();
+            listOfFile=data.entries;
+            var usn='';
+            if(req.user)
+            {
+                usn=req.user.username;
+            }
+            res.render('index',{data:data.entries,status:userConfig.user.alert_filesize,username:usn});
+        })
+    }
+    else
+    {
+        var usn='';
+        if(req.user)
+        {
+            usn=req.user.username;
+        }
+        res.render('index',{data:listOfFile,status:userConfig.user.alert_filesize,username:usn});
+    }
+
 });
 router.get('/login', function(req, res, next) {
     if(req.isAuthenticated())
@@ -73,6 +98,21 @@ router.post('/upload',function (req,res) {
         }
     });
 });
+router.get('/file/:id',function (req,res) {
+    Promise.all([dropbox.getFileName(),files.FindByName(req.params.id)])
+        .then(function (data) {
+            for(i=0;i<data[0].entries.length;i++)
+            {
+                if(req.params.id==data[0].entries[i].name)
+                {
+                    res.render('file',{name:req.params.id,size:Math.round(data[0].entries[i].size/(1024*1024)),uploaded:data[1][0].date,username:'',status:userConfig.user.alert_filesize})
+                }
+            }
+        })
+        .catch(function (err) {
+            res.redirect('/');
+        })
+})
 router.get('/download/:id',function (req,res) {
     dropbox.download(req.params.id)
         .then(function (data) {

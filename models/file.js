@@ -8,7 +8,7 @@ var fileSchema=mongoose.Schema({
 var files=module.exports=mongoose.model('file',fileSchema);
 var find=module.exports.FindByName=function (name) {
     return new Promise(function (resolve,reject) {
-        file.find({name:name},function (err,data) {
+        files.find({name:name},function (err,data) {
             if(err||!data)
                 reject('not found')
             resolve(data);

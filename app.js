@@ -6,17 +6,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport=require('passport');
 var session=require('express-session');
+var mongoose=require('mongoose');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var userConfig=require('./config/user-config');
 //
-var mongoose=require('mongoose');
-mongoose.connect("mongodb://hirosume:cuong299@ds042688.mlab.com:42688/gin-file",{ useMongoClient:true},function(err,db){
+
+mongoose.connect("mongodb://hirosume:cuong299@ds042688.mlab.com:42688/gin-file",{ useMongoClient:true},function(err){
     if(err){
         console.log('Can not connect to mongodb',err);
     }else {
-        console.log('connected to mongodb',db);
+        console.log('connected to mongodb');
     }
 });
 var app = express();
@@ -55,9 +56,8 @@ app.use('/', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  res.redirect('/');
+  next();
 });
 // error handler
 app.use(function(err, req, res, next) {
