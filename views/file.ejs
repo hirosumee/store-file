@@ -39,6 +39,19 @@
         </div>
         <div class="card-body">
             <a href="/download/<%=name%>" class="btn btn-primary btn-lg">DownLoad</a>
+            <a href="#" class="btn btn-primary btn-lg" id="btn-open-popup">Preview</a>
+            <div class="row" >
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <div id="to-popup">
+                        <span id="btn-close"></span>
+                        <div id="popup-content">
+                            <img id="image-pre" src="" alt="<%=name%>">
+                        </div><!--end #popup-content-->
+                    </div> <!--to-popup end-->
+                    <div id="background-popup"></div>
+                </div>
+            </div>
             <hr />
             <h4 class="card-title">File data:</h4>
             <ul class="list-group">
@@ -74,7 +87,10 @@
         </div>
     </div>
 </div>
+
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="/javascripts/file.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -137,4 +137,13 @@ router.get('/download/:id',function (req,res) {
             res.redirect('/');
         })
 });
+router.get('/preview/:link',function (req,res) {
+    dropbox.getThumbnail(req.params.link)
+        .then(function (data) {
+            res.send(data);
+        })
+        .catch(function (reason) {
+            res.send(reason);
+        })
+})
 module.exports = router;

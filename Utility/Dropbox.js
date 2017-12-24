@@ -85,3 +85,35 @@ var download =module.exports.download=function (name) {
             })
     });
 };
+module.exports.getThumbnail=function (name) {
+    return new Promise(function (resolve,reject) {
+        getfile()
+            .then( function (res) {
+                for( i=0;i<res.entries.length;i++)
+                {
+                    if(res.entries[i]['.tag']==='file')
+                    {
+                        if(res.entries[i].name===name)
+                        {
+                            dbx.filesDownload({path:'/'+name}).then(
+                                function (data) {
+                                    //  console.log(data);
+                                    fs.writeFile('public\\images\\'+data.name, data.fileBinary, 'binary', function (err) {
+                                        if (err) { throw err; }
+                                        console.log('File: ' + data.name + ' saved.');
+                                        resolve(data.name);
+                                    });
+                                }
+                            )
+
+                        }
+                    }
+                }
+                //file không tồn tại
+                //
+            })
+            .catch(function (err) {
+                reject(err)
+            })
+    });
+};
