@@ -11,14 +11,35 @@ function check_review() {
         $('#btn-open-popup').addClass('invisible');
     }
 }
+function detectmob() {
+    if( navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPad/i)
+        || navigator.userAgent.match(/iPod/i)
+        || navigator.userAgent.match(/BlackBerry/i)
+        || navigator.userAgent.match(/Windows Phone/i)
+    ){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 $(document).ready(function(){
     check_review();
     $("#btn-open-popup").click(function(even) {
         even.preventDefault(); // không truy cập đến link trong thẻ a
         $.get("/preview/"+$('#image-pre').attr('alt'), function(response){
-            console.log('ok')
-            $('#image-pre').attr('src','/preview/'+$('#image-pre').attr('alt'));
-           loadPopup(); // function show popup
+            if(detectmob())
+            {
+                window.location.href = "/preview/"+$('#image-pre').attr('alt');
+            }
+            else
+            {
+                $('#image-pre').attr('src','/preview/'+$('#image-pre').attr('alt'));
+                loadPopup(); // function show popup
+            }
         });
 
     });
