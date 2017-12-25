@@ -97,13 +97,13 @@ module.exports.getThumbnail=function (name) {
                         {
                             dbx.filesDownload({path:'/'+name}).then(
                                 function (data) {
-                                    resolve(data.fileBinary);
                                     //  console.log(data);
-                                    // fs.writeFile('./public\\images\\'+data.name, data.fileBinary, 'binary', function (err) {
-                                    //     if (err) { throw err; }
-                                    //     console.log('File: ' + data.name + ' saved.');
-                                    //     resolve(data.name);
-                                    // });
+                                    console.log(__dirname)
+                                    fs.writeFile('./public/images/'+data.name, data.fileBinary, 'binary', function (err) {
+                                        if (err) { throw err; }
+                                        console.log('File: ' + data.name + ' saved.');
+                                        resolve(data.name);
+                                    });
                                 }
                             )
 

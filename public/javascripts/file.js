@@ -33,11 +33,11 @@ $(document).ready(function(){
         $.get("/preview/"+$('#image-pre').attr('alt'), function(response){
             if(detectmob())
             {
-                window.location.href = "/preview/"+$('#image-pre').attr('alt');
+                window.location.href = "/images/"+$('#image-pre').attr('alt');
             }
             else
             {
-                $('#image-pre').attr('src','/preview/'+$('#image-pre').attr('alt'));
+                 $('#image-pre').attr('src','/images/'+$('#image-pre').attr('alt'));
                 loadPopup(); // function show popup
             }
         });
