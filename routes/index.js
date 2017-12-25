@@ -103,12 +103,18 @@ router.post('/upload',function (req,res) {
 router.get('/file/:id',function (req,res) {
     Promise.all([dropbox.getFileName(),files.FindByName(req.params.id)])
         .then(function (data) {
+            var check=false;
             for(i=0;i<data[0].entries.length;i++)
             {
                 if(req.params.id==data[0].entries[i].name)
                 {
+                    check=true;
                     res.render('file',{name:req.params.id,size:Math.round(data[0].entries[i].size/(1024)),uploaded:data[1][0].date,username:'',status:userConfig.user.alert_filesize})
                 }
+            }
+            if(!check)
+            {
+                res.redirect('/');
             }
         })
         .catch(function (err) {

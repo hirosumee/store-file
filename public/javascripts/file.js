@@ -14,7 +14,6 @@ function check_review() {
 $(document).ready(function(){
     check_review();
     $("#btn-open-popup").click(function(even) {
-        console.log('aa');
         even.preventDefault(); // không truy cập đến link trong thẻ a
         $.get("/preview/"+$('#image-pre').attr('alt'), function(response){
             $('#image-pre').attr('src','/images/'+response);
