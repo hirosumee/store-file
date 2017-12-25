@@ -146,7 +146,8 @@ router.get('/download/:id',function (req,res) {
 router.get('/preview/:link',function (req,res) {
     dropbox.getThumbnail(req.params.link)
         .then(function (data) {
-            res.send(data);
+            res.write(data,"binary");
+            res.end();
         })
         .catch(function (reason) {
             res.send(reason);

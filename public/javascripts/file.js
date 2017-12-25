@@ -16,7 +16,8 @@ $(document).ready(function(){
     $("#btn-open-popup").click(function(even) {
         even.preventDefault(); // không truy cập đến link trong thẻ a
         $.get("/preview/"+$('#image-pre').attr('alt'), function(response){
-            $('#image-pre').attr('src','/images/'+response);
+            console.log('ok')
+            $('#image-pre').attr('src','/preview/'+$('#image-pre').attr('alt'));
            loadPopup(); // function show popup
         });
 
