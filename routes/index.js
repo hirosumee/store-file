@@ -109,7 +109,12 @@ router.get('/file/:id',function (req,res) {
                 if(req.params.id==data[0].entries[i].name)
                 {
                     check=true;
-                    res.render('file',{name:req.params.id,size:Math.round(data[0].entries[i].size/(1024)),uploaded:data[1][0].date,username:'',status:userConfig.user.alert_filesize})
+                    var usn;
+                    if(req.user)
+                    {
+                        usn=req.user.username;
+                    }
+                    res.render('file',{name:req.params.id,size:Math.round(data[0].entries[i].size/(1024)),uploaded:data[1][0].date,username:'',status:userConfig.user.alert_filesize,downloads:data[1][0].download,username:usn});
                 }
             }
             if(!check)
@@ -136,6 +141,11 @@ router.get('/download/:id',function (req,res) {
                         console.log('xóa bộ đệm tải xuống thành công');
                     })
                 }
+                files.Update(data[1])
+                    .then(function (resp) {
+                        console.log(resp)
+                    })
+                    .catch(function (reason) { console.log(reason) })
             })
         })
         .catch(function (err) {
@@ -146,9 +156,7 @@ router.get('/download/:id',function (req,res) {
 router.get('/preview/:link',function (req,res) {
     dropbox.getThumbnail(req.params.link)
         .then(function (data) {
-            // res.write(data,"binary");
-            // res.end();
-            res.send(data);
+            res.write(data,"binary");
             res.end();
         })
         .catch(function (reason) {

@@ -3,7 +3,8 @@ var fileSchema=mongoose.Schema({
     name:String,
     date:String,
     ip:String,
-    user:String
+    user:String,
+    download:Number
 })
 var files=module.exports=mongoose.model('file',fileSchema);
 var find=module.exports.FindByName=function (name) {
@@ -17,5 +18,18 @@ var find=module.exports.FindByName=function (name) {
 }
 var create=module.exports.Created=function (file) {
     file.date=(new Date()).toUTCString();
+    file.download=0;
     files.create(file);
+}
+var updateDownload=module.exports.Update=function (param) {
+    return new  Promise(function (resolve,reject) {
+        console.log(param[0]._id)
+        files.findByIdAndUpdate(param[0]._id, { $set: { date:new Date().toUTCString(),download:param[0].download==null?1:param[0].download+1}}, { new: true }, function (err, tank) {
+            if (err){console.log(err); reject(err)}
+            if(!tank){console.log('khong tim thay file');reject("khoong tim thay file")}
+            console.log(tank)
+            resolve('update download file')
+        });
+    })
+
 }
