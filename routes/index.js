@@ -141,11 +141,16 @@ router.get('/download/:id',function (req,res) {
                         console.log('xóa bộ đệm tải xuống thành công');
                     })
                 }
-                files.Update(data[1])
-                    .then(function (resp) {
-                        console.log(resp)
-                    })
-                    .catch(function (reason) { console.log(reason) })
+                files.FindByName(data).then(function (resp) {
+                    if(resp){
+                        files.Update(resp)
+                            .then(function (resp1) {
+                                console.log(resp1)
+                            })
+                            .catch(function (reason) { console.log(reason) })
+                    }
+                })
+
             })
         })
         .catch(function (err) {
