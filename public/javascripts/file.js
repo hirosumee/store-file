@@ -11,6 +11,18 @@ function check_review() {
         $('#btn-open-popup').addClass('invisible');
     }
 }
+function ispass() {
+    if($('#10').text()==0){
+        $(".pas").addClass('invisible');
+    }
+}
+var usn=function () {
+    var name=$('#username').text();
+    console.log(name)
+    if(name.trim()==''){
+        $('#username_a').addClass('invisible')
+    }
+};
 function detectmob() {
     if( navigator.userAgent.match(/Android/i)
         || navigator.userAgent.match(/webOS/i)
@@ -28,6 +40,8 @@ function detectmob() {
 }
 $(document).ready(function(){
     check_review();
+    ispass();
+    usn();
     $("#btn-open-popup").click(function(even) {
         even.preventDefault(); // không truy cập đến link trong thẻ a
         $.get("/preview/"+$('#image-pre').attr('alt'), function(response){

@@ -67,7 +67,16 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+
+    if(err.code=='LIMIT_FILE_SIZE'){
+        // catch over file size limit
+        res.redirect('/');
+    }
+    else
+    {
+        res.render('error');
+    }
+
 });
 
 module.exports = app;

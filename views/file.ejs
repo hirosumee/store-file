@@ -37,9 +37,19 @@
         <div class="card-header list-group-item-warning">
             <%=name%>
         </div>
+
         <div class="card-body">
-            <a href="/download/<%=name%>" class="btn btn-primary btn-lg">DownLoad</a>
-            <a href="#" class="btn btn-primary btn-lg" id="btn-open-popup">Preview</a>
+            <form method="post" action="/download">
+                <button type="submit"  class="btn btn-primary btn-lg">Download</button>
+            <!--<a href="/download/<%=name%>" class="btn btn-primary btn-lg">DownLoad</a>-->
+                <a href="#" class="btn btn-primary btn-lg" id="btn-open-popup">Preview</a>
+                <div class="form-group">
+                    <hr>
+                    <input type="password" id="inputPassword" style="width: 232px" name="password" class="form-control mb-2 mr-sm-2 pas" placeholder="Enter password(if necesary)">
+                    <input name="name" class="pas" hidden value="<%=name%>" >
+                    <a hidden id="10" ><%=password%></a>
+                </div>
+            </form>
             <div class="row" >
                 <div class="col-3"></div>
                 <div class="col-6">

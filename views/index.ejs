@@ -22,8 +22,8 @@
             <a class="nav-item nav-link" href="#">Profile</a>
             <a class="nav-item nav-link disabled invisible" href="#">Logout</a>
         </div>
-        <a class="nav-item nav-link name-user ">
-            <span class="btn btn-outline-primary btn-default btn-file">
+        <a class="nav-item nav-link name-user " id="username_a">
+            <span class="btn btn-outline-primary btn-default btn-file" id="username">
                 <%=username%>
             </span>
         </a>
@@ -40,17 +40,42 @@
                 <input type="file" name="files">
             </span>
             <button type="submit" class="btn btn-secondary">Upload</button>
-            <!--<div class="form-row config">-->
-                <!--&lt;!&ndash;<div class="col-md-4"></div>&ndash;&gt;-->
-                <!--<div class="form-group col-md-4">-->
-                    <!--<label for="inputPassword2" class="sr-only">Password</label>-->
-                    <!--<input type="password" class="form-control" name="password" id="inputPassword2" placeholder="Password">-->
-                <!--</div>-->
-                <!--<div class="form-group col-md-5">-->
-                    <!--<label for="inputPassword2" class="sr-only">TimesDownload</label>-->
-                    <!--<input type="number" class="form-control" id="inputPassword2" name="range_down" placeholder="TimesDownload" value="100">-->
-                <!--</div>-->
-            <!--</div>-->
+            <div class="form-row config">
+                <!--<div class="col-md-4"></div>-->
+                <div class="form-group col-md-4">
+                    <label for="inputPassword2" class="sr-only">Password</label>
+                    <input type="password" class="form-control" name="password" id="inputPassword2" placeholder="Password">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="inputPassword2" class="sr-only">TimesDownload</label>
+                    <!--<input type="number" class="form-control" id="inputPassword2" name="downloadLimited" placeholder="TimesDownload" value="100">-->
+                    <select class="custom-select mr-sm-2" name="downloadLimited" id="inlineFormCustomSelect">
+                        <option selected value="-1">Không giới hạn</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="30">30</option>
+                        <option value="35">35</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                        <option value="60">60</option>
+                        <option value="70">70</option>
+                        <option value="80">80</option>
+                        <option value="90">90</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
         </form>
     </div>
     <!-- Content here -->
