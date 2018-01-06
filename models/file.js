@@ -13,7 +13,7 @@ var files=module.exports=mongoose.model('file',fileSchema);
 var find=module.exports.FindByName=function (name) {
     return new Promise(function (resolve,reject) {
         files.find({name:name},function (err,data) {
-            if(err||!data)
+            if(err||!data.length>=1)
                 reject('not found')
             resolve(data);
         })

@@ -10,6 +10,7 @@ var mongoose=require('mongoose');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var useracess=require('./models/user_access');
 var userConfig=require('./config/user-config');
 //
 
@@ -51,6 +52,16 @@ app.use(function (req,res,next) {
     }
     next();
 });
+var ip = function (req) {
+    return (req.headers['x-forwarded-for'] ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        req.connection.socket.remoteAddress).toString();
+}
+app.use(function (req,res,next) {
+    useracess.update(ip(req));
+    next();
+})
 app.use('/', index);
 app.use('/', users);
 

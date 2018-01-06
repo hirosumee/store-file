@@ -4,7 +4,7 @@ var formidable = require('formidable');
 var router = express.Router();
 var fs = require('fs');
 var multer = require('multer');
-var upload = multer({dest: 'uploads/', limits: {fileSize: 10000000}});
+var upload = multer({dest: 'uploads/', limits: {fileSize: 150 * 1024 * 1024}});
 
 var userConfig = require('../config/user-config');
 var serverConfig = require('../config/server-config')
@@ -67,7 +67,7 @@ router.post('/upload', upload.single("files"), function (req, res, next) {
                             ip: ip,
                             user: 'notLogined',
                             password: req.body.password.trim(),
-                            downloadLimited: (Number(req.body.downloadLimited)&&Number(req.body.downloadLimited)!=-1) ? Number(req.body.downloadLimited) : 1000
+                            downloadLimited: (Number(req.body.downloadLimited) && Number(req.body.downloadLimited) != -1) ? Number(req.body.downloadLimited) : 1000
                         };
                         if (req.user) {
                             filec.user = req.user.username;
@@ -162,7 +162,7 @@ router.get('/file/:id', function (req, res) {
                         status: userConfig.user.alert_filesize,
                         downloads: data[1][0].download,
                         username: usn,
-                        password:data[1][0].password==""?0:1
+                        password: data[1][0].password == "" ? 0 : 1
                     });
                 }
             }
@@ -177,7 +177,7 @@ router.get('/file/:id', function (req, res) {
 router.post('/download', function (req, res) {
     files.FindByName(req.body.name)
         .then(function (dataF) {
-            if (req.body.password == dataF[0].password&&dataF[0].downloadLimited>0) {
+            if (req.body.password == dataF[0].password && dataF[0].downloadLimited > 0) {
                 dropbox.download(dataF[0].name)
                     .then(function (data) {
                         res.download(data, function (e) {
@@ -197,11 +197,10 @@ router.post('/download', function (req, res) {
                         res.redirect(req.originalUrl);
                     });
             }
-            else
-            {
+            else {
                 res.redirect(req.originalUrl);
             }
-            if(dataF.length>0){
+            if (dataF.length > 0) {
                 files.Update(dataF)
                     .then(function (resp1) {
                         console.log(resp1)
