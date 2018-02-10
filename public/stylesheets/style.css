@@ -1,0 +1,52 @@
+.navbar,#exampleModalLabel{
+    font-family: 'Just Another Hand', cursive;
+    font-size: 20px;
+}
+#collapse-setting, #collapse-menu,body{
+    font-family: 'VT323', monospace;
+}
+#login-form{
+    background-color: #404040;
+    color: #ffffff;
+}
+body{
+    /* background-color: #404040; */
+    background-image: url(/images/bg.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#list-file{
+    opacity: 0.8;
+    /*margin-top: 110px;*/
+}
+#message{
+    z-index: 100;
+    background-color: #f4bf42;
+}
+html  {
+    overflow-x: hidden;
+}
+.dropdown-menu{
+    background-color:     #fbf4f478;
+}
+.container-lg{
+    margin-top: 110px;
+}
+#avatar-profile{
+    height: 200px;
+    width: 200px;
+}
+.table{
+    /*color: rgba(26,223,175,0);*/
+}
+.file {
+    visibility: hidden;
+    position: absolute;
+}
+.list-group-item{
+    width: 90%;
+}
+.button-control{
+    margin-top: 50px;
+}

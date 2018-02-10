@@ -1,0 +1,207 @@
+<!DOCTYPE>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+            integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
+            crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Just+Another+Hand|VT323&amp;subset=vietnamese" rel="stylesheet">
+    <script src="javascripts/notify.js"></script>
+    <link href="stylesheets/style.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" href="#">GinFile</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <% if(!islogin)
+            { %>
+            <%- ' <li class="nav-item"> <a class="nav-link" href="#">Registry</a> </li>' %>
+            <% }
+            else{
+            %>
+            <%- '<li class="nav-item"> <a class="nav-link" href="/profile">Profile</a> </li>' %>
+            <%
+            }
+            %>
+        </ul>
+        <div id="form-login">
+
+            <div class="btn-group dropleft">
+                <%
+                if(islogin) { %>
+                <%- '<img src="https://gin-file.herokuapp.com/preview/background1.png" class="rounded-circle" id="collapse-setting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style="width: 50px;height: 50px;">' %>
+                <% }
+                else
+                { %>
+                <%- '<button type="button" class="btn btn-danger dropdown-toggle" id="collapse-setting" data-toggle="modal" data-target="#exampleModal" >Login </button>' %>
+                <% }
+                %>
+                <div class="dropdown-menu" id="collapse-menu" style="    margin-top: 15px;">
+                    <a class="dropdown-item" href="/profile">Your Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                    <!-- / -->
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="login-form">
+                <div class="modal-body">
+                    <h5 class="modal-title" id="exampleModalLabel" style="font-size:24px;">Login</h5>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button> -->
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInput">Username address</label>
+                            <input type="text" class="form-control" id="exampleInputId" name="username"
+                                   placeholder="Enter username">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                                else.
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword" name="password"
+                                   id="password" placeholder="Password">
+                        </div>
+                        <button type="button" class="btn btn-secondary" style="" id="submit-button">Login</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <small>Or sign in with</small>
+                    <a href="/auth/facebook"><i class="fa fa-facebook" aria-hidden="true"></i>&nbsp;</a>
+                    <a><i class="fa fa-google-plus" aria-hidden="true">&nbsp;</i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/-->
+<div>
+    <div class="modal fade" id="ModalUpload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="login-form">
+                <div class="modal-body">
+                    <h5 class="modal-title" id="exampleModalLabel" style="font-size:24px;">Upload</h5>
+                    <form>
+                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                            <input type="checkbox" class="custom-control-input" checked id="public-private">
+                            <label class="custom-control-label" for="public-private">public/private</label>
+                        </div>
+                        <legend class="col-form-label pt-0">Password</legend>
+                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                            <input type="checkbox" class="custom-control-input" id="isrequirepassword">
+                            <label class="custom-control-label" for="isrequirepassword">require password</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control "  id="password" placeholder="Password" disabled>
+                        </div>
+                    </form>
+                    <div class="progress">
+                        <div id="progressbar" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="upload-file" type="button">Upload</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / -->
+<div class="container-lg">
+    <div class="row">
+        <div class="col-3">
+            <div id="chat" class="fixed-top row"
+                 style="z-index: 100;    width: 0%;height: 100%;background-color: #aaddcc24;">
+                <div id="chat-content" class="col-11">
+                    <div style="height: 100px; width: inherit;"></div>
+                </div>
+                <div id="slide-bar" class="col-1" style="background-color: rgba(26,223,175,0.31);height: 100px;"></div>
+            </div>
+        </div>
+        <div class="col-6" id="list-file">
+            <div class="form-group">
+                <form name="inputfile" enctype="multipart/form-data">
+                    <input type="file" name="file" class="file">
+                </form>
+                <div class="input-group col-xs-12">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+                    <input type="text" class="form-control input-lg" id="filename" disabled placeholder="Upload File">
+                    <span class="input-group-btn">
+                    <button class="browse btn btn-dark input-lg" type="button"><i class="glyphicon glyphicon-search"></i> Browse</button>
+                        <button class="upload btn btn-dark" type="button" data-toggle="modal" data-target="#ModalUpload"><i class="glyphicon glyphicon-search"></i> Upload</button>
+                    </span>
+                </div>
+            </div>
+
+            <table class="table table-hover table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Size</th>
+                </tr>
+                </thead>
+                <tbody id="list">
+                <%
+                for(i = data.length - 1;i >= 0;i--)
+                {
+                %>
+                <%
+                    var a = data[i].name.split('-');
+                     var name = '';
+                    if (a.length == 1)
+                    {
+                        name = a[0];
+                    }
+                    else {
+                        if (a.length > 1)
+                        {
+                            for (j = 1; j < a.length; j++)
+                            {
+                                name += a[j];
+                            }
+                        }
+                    }
+                %>
+                <tr class="ddd">
+                    <th scope="row"><%= data.length - i %></th>
+                    <td id="<%= data[i]._id %>"><%=name %></td>
+                    <td id="<%= data[i]._id %>"><%=data[i].type%></td>
+                    <td id="<%= data[i]._id %>"><%= data[i].size %></td>
+                </tr>
+                <% }
+                %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script src="javascripts/index.js"></script>
+<script src="javascripts/home.js"></script>
+</body>
+</html>

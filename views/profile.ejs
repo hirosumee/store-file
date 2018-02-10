@@ -1,0 +1,132 @@
+<!DOCTYPE>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Just+Another+Hand|VT323&amp;subset=vietnamese" rel="stylesheet">
+    <script src="javascripts/notify.js"></script>
+    <link  href="stylesheets/style.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" >
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" href="#">GinFile</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+           <li class="nav-item"> <a class="nav-link" href="/profile">Profile</a> </li>
+        </ul>
+        <div id="form-login" >
+
+            <div class="btn-group dropleft">
+               <img src="https://gin-file.herokuapp.com/preview/background1.png" class="rounded-circle" id="collapse-setting" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style="width: 50px;height: 50px;">
+                <div class="dropdown-menu"  id="collapse-menu" style="    margin-top: 15px;">
+                    <a class="dropdown-item" href="#">Your Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                    <!-- / -->
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="login-form">
+                <div class="modal-body">
+                    <h5 class="modal-title" id="exampleModalLabel" style="font-size:24px;">Login</h5>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button> -->
+                    <form >
+                        <div class="form-group">
+                            <label for="exampleInput">Username address</label>
+                            <input type="text" class="form-control" id="exampleInputId"  name="username" placeholder="Enter username">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword" name="password" id="password" placeholder="Password">
+                        </div>
+                        <button type="button" class="btn btn-secondary" style="" id="submit-button">Login</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <small>Or sign in with</small>
+                    <a  href="/auth/facebook"><i class="fa fa-facebook" aria-hidden="true"></i>&nbsp;</a>
+                    <a><i class="fa fa-google-plus" aria-hidden="true">&nbsp;</i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / -->
+<div class="container-lg" >
+    <div class="row">
+        <div class="col-1">
+            <div id="chat" class="fixed-top row" style="z-index: 100;    width: 0%;height: 100%;background-color: #aaddcc24;" >
+                <div id="chat-content" class="col-11">
+                    <div style="height: 100px; width: inherit;"></div>
+                </div>
+                <div id="slide-bar"  class="col-2" style="background-color: rgba(26,223,175,0.31);height: 100px;"></div>
+            </div>
+        </div>
+        <div class="col-10" id="table" style="width: 100%;height: 100%;background-color: #76a79642">
+           <div class="row">
+               <div class="col-4">
+                   <img src="https://gin-file.herokuapp.com/preview/background1.png" alt="200x200" id="avatar-profile">
+               </div>
+               <div class="col-4">
+
+               </div>
+           </div>
+            <table class="table table-hover table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Time Upload</th>
+                    <th scope="col">Downloads</th>
+                    <th scope="col">Private</th>
+                    <th scope="col">Password</th>
+                </tr>
+                </thead>
+                <tbody id="list">
+                <%for(i=data.length-1;i>=0;i--)
+                {
+                %>
+                <tr class="ddd">
+                    <th scope="row"><%=data.length-i%></th>
+                    <td id="<%= data[i]._id %>"><%=data[i].name%></td>
+                    <td id="<%= data[i]._id %>"><%=data[i].type%></td>
+                    <td id="<%= data[i]._id %>"><%=data[i].size%>bytes</td>
+                    <td id="<%= data[i]._id %>"><%=data[i].time%></td>
+                    <td id="<%= data[i]._id %>"><%=data[i].downloads%></td>
+                    <td id="<%= data[i]._id %>"><%=!data[i].isPublic%></td>
+                    <td id="<%= data[i]._id %>"><%=data[i].password%></td>
+                </tr>
+                <%
+                }
+                %>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+<script src="javascripts/index.js"></script>
+<script src="javascripts/profile.js"></script>
+</body>
+</html>
